@@ -1,0 +1,8 @@
+pytest
+pytest-cov
+flake8
+pylint
+mypy
+bandit
+fastapi
+uvicorn
