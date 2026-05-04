@@ -1,5 +1,5 @@
 """
-Модуль API для системи TMS.
+Main API module for Task Management System.
 """
 from datetime import datetime
 from fastapi import FastAPI
@@ -10,7 +10,7 @@ app = FastAPI(title='TMS API', version='1.0.0')
 @app.get('/health')
 def health_check():
     """
-    Ендпоінт для перевірки працездатності сервісу.
+    Returns the service health status.
     """
     return {
         'status': 'ok',
@@ -18,3 +18,5 @@ def health_check():
         'timestamp': datetime.utcnow().isoformat(),
         'version': '1.0.0'
     }
+
+# Кінець файлу (цей коментар допоможе уникнути помилки W292)
