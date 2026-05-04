@@ -1,8 +1,8 @@
-pytest
-pytest-cov
-flake8
-pylint
-mypy
-bandit
-fastapi
-uvicorn
+fastapi==0.109.0
+uvicorn==0.27.0
+pytest==8.0.0
+pytest-cov==4.1.0
+flake8==7.0.0
+pylint==3.0.3
+mypy==1.8.0
+bandit==1.7.7
