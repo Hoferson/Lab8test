@@ -48,10 +48,17 @@ jobs:
           pip install pytest pytest-cov
       - name: Run tests with coverage
         run: |
-          # Створюємо порожній тест, щоб pytest не падав, якщо папка порожня
+          # Створюємо тест, який реально викликає твій код для покриття (coverage)
           mkdir -p tests
-          echo "def test_health(): assert True" > tests/test_placeholder.py
-          pytest --cov=src --cov-fail-under=${{ env.MIN_COVERAGE }}
+          echo "from src.api.app import health_check
+          def test_health():
+              response = health_check()
+              assert response['status'] == 'ok'
+              assert 'timestamp' in response" > tests/test_app.py
+          
+          # Запускаємо з PYTHONPATH=., щоб pytest бачив папку src
+          export PYTHONPATH=$PYTHONPATH:$(pwd)
+          pytest --cov=src --cov-report=term --cov-fail-under=${{ env.MIN_COVERAGE }}
 
   security:
     name: 'Security Scan'
@@ -66,4 +73,4 @@ jobs:
       - name: Install bandit
         run: pip install bandit
       - name: Run bandit
-        run: bandit -r src/ -ll
+        run: bandit -r src/ -ll  
