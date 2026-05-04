@@ -3,6 +3,7 @@ from datetime import datetime
 
 app = FastAPI(title='TMS API', version='1.0.0')
 
+
 @app.get('/health')
 def health_check():
     return {
