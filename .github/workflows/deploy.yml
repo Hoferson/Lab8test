@@ -1,0 +1,20 @@
+name: Deploy to Render
+
+on:
+  workflow_run:
+    workflows: ["TMS CI Pipeline"]
+    types: [completed]
+    branches: [main]
+
+jobs:
+  deploy:
+    name: 'Deploy to Production'
+    runs-on: ubuntu-latest
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    steps:
+      - name: Deploy to Render via API
+        run: |
+          curl -X POST 'https://api.render.com/v1/services/${{ secrets.RENDER_SERVICE_ID }}/deploys' \
+          -H 'Authorization: Bearer ${{ secrets.RENDER_API_KEY }}' \
+          -H 'Content-Type: application/json' \
+          -d '{"clearCache": "false"}'
